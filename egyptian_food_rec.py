@@ -336,7 +336,7 @@ def Weighted_Hybrid_Recommendations(user_id, food_name, diseases_list=None, alle
         output_lines.append({
         "rank": count,
         "food_name": food,
-        "calories": int(row['calories_per_100g']),
+        "calories": int(row['calories_per_100g']) if not pd.isna(row['calories_per_100g']) else 0,
         "protein": row['protein_per_100g'],
         "carbs": row['carbs_per_100g'],
         "fats": row['fats_per_100g']})
