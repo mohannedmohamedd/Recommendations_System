@@ -8,6 +8,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from wordcloud import WordCloud 
 import importlib
+import math
+
 
 HAS_SURPRISE = False
 def _import_surprise():
@@ -69,6 +71,16 @@ DISEASE_RESTRICTIONS = {
         'check_ingredients': True
         # allergy_ingredients تتجي من المستخدم
     }}
+ def clean_float(val, default=0.0):
+    if val is None:
+        return default
+    try:
+        f = float(val)
+        if math.isnan(f) or math.isinf(f):
+            return default
+        return round(f, 2)
+    except:
+        return default
 
 
 def filter_by_diseases(food_names_list, diseases_list=None, allergy_ingredients=None):
@@ -337,10 +349,10 @@ def Weighted_Hybrid_Recommendations(user_id, food_name, diseases_list=None, alle
         "rank": count,
         "food_name": food,
         "calories": int(row['calories_per_100g']) if not pd.isna(row['calories_per_100g']) else 0,
-        "protein": row['protein_per_100g'],
-        "carbs": row['carbs_per_100g'],
-        "fats": row['fats_per_100g']})
-        seen.add(food)
+        "protein": clean_float(row['protein_per_100g']),
+        "carbs": clean_float(row['carbs_per_100g']),
+        "fats": clean_float(row['fats_per_100g'])
+        })
         
         if count >= n_recommendations:
             break
