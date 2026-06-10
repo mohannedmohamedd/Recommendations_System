@@ -288,6 +288,8 @@ def Collaborative_filtering(user_id, num_of_recommendations=10, diseases_list=No
 def Weighted_Hybrid_Recommendations(user_id, food_name, diseases_list=None, allergy_ingredients=None, n_recommendations=10):
     
     content_recs = Recommendation(food_name, diseases_list, allergy_ingredients)
+    if content_recs is None:
+        content_recs = []
     content_dict = {name: score for name, score in content_recs}
 
     collab_dict = {}
