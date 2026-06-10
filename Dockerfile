@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	build-essential \
 	gcc \
 	g++ \
-	libatlas-base-dev \
+	libopenblas-dev \
 	liblapack-dev \
 	libblas-dev \
 	libfreetype6-dev \
