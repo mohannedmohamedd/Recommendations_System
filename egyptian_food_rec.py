@@ -71,7 +71,7 @@ DISEASE_RESTRICTIONS = {
         'check_ingredients': True
         # allergy_ingredients تتجي من المستخدم
     }}
- def clean_float(val, default=0.0):
+def clean_float(val, default=0.0):
     if val is None:
         return default
     try:
