@@ -8,5 +8,5 @@ matplotlib
 wordcloud
 python-multipart
 pydantic
-Cython
+Cython<3.0
 wheel
