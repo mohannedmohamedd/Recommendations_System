@@ -303,14 +303,17 @@ def Weighted_Hybrid_Recommendations(user_id, food_name, diseases_list=None, alle
     if content_recs is None:
         content_recs = []
     content_dict = {name: score for name, score in content_recs}
-
+    
     collab_dict = {}
-    if user_id in new_long_ratings['userId'].unique():
-        collab_recs = Collaborative_filtering(user_id, num_of_recommendations=20,diseases_list=diseases_list, allergy_ingredients=allergy_ingredients)
-        for food_id, score in collab_recs:
-            food_name_ar = df[df['food_id'] == food_id]['food_name_ar'].values
-            if len(food_name_ar) > 0:
-                collab_dict[food_name_ar[0]] = (score / 5)
+    if HAS_SURPRISE and user_id in new_long_ratings['userId'].unique():
+        try:
+            collab_recs = Collaborative_filtering(user_id, num_of_recommendations=20, diseases_list=diseases_list, allergy_ingredients=allergy_ingredients)
+            for food_id, score in collab_recs:
+                food_name_ar = df[df['food_id'] == food_id]['food_name_ar'].values
+                if len(food_name_ar) > 0:
+                    collab_dict[food_name_ar[0]] = (score / 5)
+        except Exception:
+            pass  # fallback to content-based only
 
     all_foods = set(content_dict.keys()) | set(collab_dict.keys())
     content_weight = 0.9
