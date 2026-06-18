@@ -348,13 +348,15 @@ def Weighted_Hybrid_Recommendations(user_id, food_name, diseases_list=None, alle
         row = food_data.iloc[0]
         count += 1
         # line = f"{count}. {food} - {int(row['calories_per_100g'])} سعر (بروتين: {row['protein_per_100g']} , كاربوهيدرات: {row['carbs_per_100g']} , دهون: {row['fats_per_100g']})"
+    
         output_lines.append({
-        "rank": count,
-        "food_name": food,
-        "calories": int(row['calories_per_100g']) if not pd.isna(row['calories_per_100g']) else 0,
-        "protein": clean_float(row['protein_per_100g']),
-        "carbs": clean_float(row['carbs_per_100g']),
-        "fats": clean_float(row['fats_per_100g'])
+        "food_id": int(row['food_id']) if not pd.isna(row['food_id']) else None,
+        "اسم الأكل": food,
+        "سعرات لكل 100 جرام": int(row['calories_per_100g']) if not pd.isna(row['calories_per_100g']) else 0,
+        "بروتين": clean_float(row['protein_per_100g']),
+        "كاربوهيدرات": clean_float(row['carbs_per_100g']),
+        "دهون": clean_float(row['fats_per_100g']),
+        "image_url": row['image_url'] if not pd.isna(row['image_url']) else None
         })
         
         if count >= n_recommendations:
